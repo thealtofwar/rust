@@ -214,6 +214,7 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
                 [sym::link_name, ..] => self.check_link_name(hir_id, attr, span, target),
                 [sym::link_section, ..] => self.check_link_section(hir_id, attr, span, target),
                 [sym::no_mangle, ..] => self.check_no_mangle(hir_id, attr, span, target),
+                [sym::zero_stack, ..] => self.check_zero_stack(hir_id, attr, span, target),
                 [sym::deprecated, ..] => self.check_deprecated(hir_id, attr, span, target),
                 [sym::macro_use, ..] | [sym::macro_escape, ..] => {
                     self.check_macro_use(hir_id, attr, target)
@@ -1820,6 +1821,20 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
                     attr.span,
                     errors::NoMangle { span },
                 );
+            }
+        }
+    }
+
+    fn check_zero_stack(&self, hir_id: HirId, attr: &Attribute, span: Span, target: Target) {
+        match target {
+            Target::Fn => {}
+            Target::Method(..) if self.is_impl_item(hir_id) => {}
+            _ => {
+                self.dcx().emit_err(errors::AttrShouldBeAppliedToFn {
+                    attr_span: attr.span,
+                    defn_span: span,
+                    on_crate: hir_id == CRATE_HIR_ID
+                });
             }
         }
     }

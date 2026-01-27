@@ -2237,6 +2237,7 @@ symbols! {
         yield_expr,
         ymm_reg,
         yreg,
+        zero_stack,
         zfh,
         zfhmin,
         zmm_reg,
