@@ -749,10 +749,7 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
             Target::Fn
             | Target::Method(MethodKind::Trait { body: true } | MethodKind::Inherent) => {}
             _ => {
-                self.dcx().emit_err(errors::AttrShouldBeAppliedToFn {
-                    attr_span,
-                    defn_span: self.tcx.hir_span(hir_id),
-                });
+
             }
         }
     }
