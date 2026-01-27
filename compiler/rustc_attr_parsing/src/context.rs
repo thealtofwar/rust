@@ -24,7 +24,7 @@ use crate::attributes::codegen_attrs::{
     ColdParser, CoverageParser, EiiForeignItemParser, ExportNameParser, ForceTargetFeatureParser,
     NakedParser, NoMangleParser, ObjcClassParser, ObjcSelectorParser, OptimizeParser,
     PatchableFunctionEntryParser, RustcPassIndirectlyInNonRusticAbisParser, SanitizeParser,
-    TargetFeatureParser, ThreadLocalParser, TrackCallerParser, UsedParser,
+    TargetFeatureParser, ThreadLocalParser, TrackCallerParser, UsedParser, ZeroStackParser,
 };
 use crate::attributes::confusables::ConfusablesParser;
 use crate::attributes::crate_level::{
@@ -317,6 +317,7 @@ attribute_parsers!(
         Single<WithoutArgs<TrackCallerParser>>,
         Single<WithoutArgs<TypeConstParser>>,
         Single<WithoutArgs<UnsafeSpecializationMarkerParser>>,
+        Single<WithoutArgs<ZeroStackParser>>,
         // tidy-alphabetical-end
     ];
 );

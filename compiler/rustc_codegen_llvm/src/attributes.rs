@@ -421,6 +421,10 @@ pub(crate) fn llfn_attrs_from_instance<'ll, 'tcx>(
         to_add.push(llvm::CreateAttrString(cx.llcx, "offload-kernel"))
     }
 
+    if codegen_fn_attrs.flags.contains(CodegenFnAttrFlags::ZERO_STACK) {
+        to_add.push(llvm::CreateAttrString(cx.llcx, "zero-stack"));
+    }
+
     if codegen_fn_attrs.flags.contains(CodegenFnAttrFlags::COLD) {
         to_add.push(AttributeKind::Cold.create_attr(cx.llcx));
     }

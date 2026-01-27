@@ -189,6 +189,9 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
                 Attribute::Parsed(AttributeKind::Naked(..)) => {
                     self.check_naked(hir_id, target)
                 }
+                Attribute::Parsed(AttributeKind::ZeroStack(attr_span)) => {
+                    self.check_zero_stack(hir_id, *attr_span, target)
+                }
                 Attribute::Parsed(AttributeKind::TrackCaller(attr_span)) => {
                     self.check_track_caller(hir_id, *attr_span, attrs, target)
                 }
@@ -737,6 +740,20 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
                 }
             }
             _ => {}
+        }
+    }
+
+    /// Checks if `#[zero_stack]` is applied to a function definition.
+    fn check_zero_stack(&self, hir_id: HirId, attr_span: Span, target: Target) {
+        match target {
+            Target::Fn
+            | Target::Method(MethodKind::Trait { body: true } | MethodKind::Inherent) => {}
+            _ => {
+                self.dcx().emit_err(errors::AttrShouldBeAppliedToFn {
+                    attr_span,
+                    defn_span: self.tcx.hir_span(hir_id),
+                });
+            }
         }
     }
 

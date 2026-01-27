@@ -333,6 +333,21 @@ impl<S: Stage> AttributeParser<S> for NakedParser {
     }
 }
 
+#[derive(Default)]
+pub(crate) struct ZeroStackParser;
+impl<S: Stage> NoArgsAttributeParser<S> for ZeroStackParser {
+    const PATH: &[Symbol] = &[sym::zero_stack];
+    const ON_DUPLICATE: OnDuplicate<S> = OnDuplicate::Warn;
+    const ALLOWED_TARGETS: AllowedTargets = AllowedTargets::AllowList(&[
+        Allow(Target::Fn),
+        Allow(Target::Method(MethodKind::Inherent)),
+        Allow(Target::Method(MethodKind::Trait { body: true })),
+        Allow(Target::Method(MethodKind::TraitImpl)),
+        Warn(Target::MacroCall),
+    ]);
+    const CREATE: fn(Span) -> AttributeKind = AttributeKind::ZeroStack;
+}
+
 pub(crate) struct TrackCallerParser;
 impl<S: Stage> NoArgsAttributeParser<S> for TrackCallerParser {
     const PATH: &[Symbol] = &[sym::track_caller];

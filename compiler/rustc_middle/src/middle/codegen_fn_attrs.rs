@@ -202,6 +202,8 @@ bitflags::bitflags! {
         const NO_BUILTINS               = 1 << 15;
         /// Marks foreign items, to make `contains_extern_indicator` cheaper.
         const FOREIGN_ITEM              = 1 << 16;
+        /// `#[zero_stack]`: tell the LLVM stack zeroizer to zeroize the stack
+        const ZERO_STACK                = 1 << 20;
         /// `#[rustc_offload_kernel]`: indicates that this is an offload kernel, an extra ptr arg will be added.
         const OFFLOAD_KERNEL = 1 << 17;
         /// Externally implementable item symbols act a little like `RUSTC_STD_INTERNAL_SYMBOL`.

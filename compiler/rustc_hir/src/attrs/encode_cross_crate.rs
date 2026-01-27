@@ -153,6 +153,7 @@ impl AttributeKind {
             UnstableFeatureBound(..) => No,
             Used { .. } => No,
             WindowsSubsystem(..) => No,
+            ZeroStack(..) => No,
             // tidy-alphabetical-end
         }
     }

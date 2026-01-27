@@ -2544,6 +2544,7 @@ symbols! {
         ymm_reg,
         yreg,
         zca,
+        zero_stack,
         zfh,
         zfhmin,
         zmm_reg,

@@ -1192,6 +1192,9 @@ pub enum AttributeKind {
     /// Represents `#[used]`
     Used { used_by: UsedBy, span: Span },
 
+    /// Represents `#[zero_stack]`
+    ZeroStack(Span),
+
     /// Represents `#[windows_subsystem]`.
     WindowsSubsystem(WindowsSubsystemKind, Span),
     // tidy-alphabetical-end

@@ -80,6 +80,7 @@ fn process_builtin_attrs(
                 interesting_spans.inline = Some(*span);
             }
             AttributeKind::Naked(_) => codegen_fn_attrs.flags |= CodegenFnAttrFlags::NAKED,
+            AttributeKind::ZeroStack(_) => codegen_fn_attrs.flags |= CodegenFnAttrFlags::ZERO_STACK,
             AttributeKind::Align { align, .. } => codegen_fn_attrs.alignment = Some(*align),
             AttributeKind::LinkName { name, .. } => {
                 // FIXME Remove check for foreign functions once #[link_name] on non-foreign
