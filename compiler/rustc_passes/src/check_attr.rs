@@ -189,9 +189,6 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
                 Attribute::Parsed(AttributeKind::Naked(..)) => {
                     self.check_naked(hir_id, target)
                 }
-                Attribute::Parsed(AttributeKind::ZeroStack(attr_span)) => {
-                    self.check_zero_stack(hir_id, *attr_span, target)
-                }
                 Attribute::Parsed(AttributeKind::TrackCaller(attr_span)) => {
                     self.check_track_caller(hir_id, *attr_span, attrs, target)
                 }
@@ -336,6 +333,7 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
                     | AttributeKind::UnstableFeatureBound(..)
                     | AttributeKind::Used { .. }
                     | AttributeKind::WindowsSubsystem(..)
+                    | AttributeKind::ZeroStack(..)
                     // tidy-alphabetical-end
 
                 ) => { /* do nothing  */ }
@@ -742,18 +740,6 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
             _ => {}
         }
     }
-
-    /// Checks if `#[zero_stack]` is applied to a function definition.
-    fn check_zero_stack(&self, hir_id: HirId, attr_span: Span, target: Target) {
-        match target {
-            Target::Fn
-            | Target::Method(MethodKind::Trait { body: true } | MethodKind::Inherent) => {}
-            _ => {
-
-            }
-        }
-    }
-
     /// Debugging aid for `object_lifetime_default` query.
     fn check_object_lifetime_default(&self, hir_id: HirId) {
         let tcx = self.tcx;
