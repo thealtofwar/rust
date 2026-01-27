@@ -1833,7 +1833,7 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
                 self.dcx().emit_err(errors::AttrShouldBeAppliedToFn {
                     attr_span: attr.span,
                     defn_span: span,
-                    on_crate: hir_id == CRATE_HIR_ID
+                    on_crate: hir_id == CRATE_HIR_ID,
                 });
             }
         }
