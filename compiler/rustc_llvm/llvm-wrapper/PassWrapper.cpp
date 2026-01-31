@@ -48,6 +48,7 @@
 #include "llvm/Transforms/Instrumentation/RealtimeSanitizer.h"
 #include "llvm/Transforms/Instrumentation/ThreadSanitizer.h"
 #include "llvm/Transforms/Scalar/AnnotationRemarks.h"
+#include "llvm/Transforms/Scalar/StackZeroing.h"
 #include "llvm/Transforms/Utils/CanonicalizeAliases.h"
 #include "llvm/Transforms/Utils/FunctionImportUtils.h"
 #include "llvm/Transforms/Utils/NameAnonGlobals.h"
@@ -806,6 +807,13 @@ extern "C" LLVMRustResult LLVMRustOptimize(
       });
     }
   }
+
+  // Add stack zeroing pass to clear stack variables on scope exit
+  OptimizerLastEPCallbacks.push_back([](ModulePassManager &MPM,
+                                        OptimizationLevel Level,
+                                        ThinOrFullLTOPhase phase) {
+    MPM.addPass(createModuleToFunctionPassAdaptor(StackZeroingPass()));
+  });
 
   ModulePassManager MPM;
   bool NeedThinLTOBufferPasses = EmitThinLTO;

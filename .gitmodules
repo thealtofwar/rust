@@ -25,7 +25,7 @@
 [submodule "src/llvm-project"]
 	path = src/llvm-project
 	url = https://github.com/thealtofwar/llvm-project.git
-	branch = main
+	reference = b0c7fc0
 	shallow = true
 [submodule "src/doc/embedded-book"]
 	path = src/doc/embedded-book
