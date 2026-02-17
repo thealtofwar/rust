@@ -1159,6 +1159,11 @@ fn validate_commandline_args_with_session_available(sess: &Session) {
     if sess.opts.unstable_opts.fixed_x18 && sess.target.arch == Arch::AArch64 {
         unsupported_sanitizers -= SanitizerSet::SHADOWCALLSTACK;
     }
+    // On ARM, Shadow Call Stack uses R12 as the shadow stack pointer.
+    // If `fixed-r12` is enabled, allow Shadow Call Stack sanitizer.
+    if sess.opts.unstable_opts.fixed_r12 && sess.target.arch == Arch::Arm {
+        unsupported_sanitizers -= SanitizerSet::SHADOWCALLSTACK;
+    }
     match unsupported_sanitizers.into_iter().count() {
         0 => {}
         1 => {

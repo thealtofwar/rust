@@ -1896,6 +1896,7 @@ symbols! {
         repr_simd,
         repr_transparent,
         require,
+        reserve_r12: "reserve-r12",
         reserve_x18: "reserve-x18",
         residual,
         result,

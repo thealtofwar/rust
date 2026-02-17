@@ -644,6 +644,15 @@ fn llvm_features_by_flags(sess: &Session, features: &mut Vec<String>) {
 
     target_features::retpoline_features_by_flags(sess, features);
 
+    // -Zfixed-r12
+    if sess.opts.unstable_opts.fixed_r12 {
+        if sess.target.arch != Arch::Arm {
+            sess.dcx().emit_fatal(errors::FixedR12InvalidArch { arch: sess.target.arch.desc() });
+        } else {
+            features.push("+reserve-r12".into());
+        }
+    }
+
     // -Zfixed-x18
     if sess.opts.unstable_opts.fixed_x18 {
         if sess.target.arch != Arch::AArch64 {

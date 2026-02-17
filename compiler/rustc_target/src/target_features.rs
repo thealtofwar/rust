@@ -149,6 +149,7 @@ static ARM_FEATURES: &[(&str, Stability, ImpliedFeatures)] = &[
     ("mclass", Unstable(sym::arm_target_feature), &[]),
     ("neon", Unstable(sym::arm_target_feature), &["vfp3"]),
     ("rclass", Unstable(sym::arm_target_feature), &[]),
+    ("reserve-r12", Forbidden { reason: "use `-Zfixed-r12` compiler flag instead" }, &[]),
     ("sha2", Unstable(sym::arm_target_feature), &["neon"]),
     // This can be *disabled* on non-`hf` targets to enable the use
     // of hardfloats while keeping the softfloat ABI.

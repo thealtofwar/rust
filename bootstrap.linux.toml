@@ -4,6 +4,7 @@ profile = "compiler"  # Includes one of the default files in src/bootstrap/defau
 change-id = 148671
 
 [build]
+submodules = false
 host = ["x86_64-unknown-linux-gnu"]
 target = ["thumbv7em-none-eabihf", "x86_64-unknown-linux-gnu"]
 

@@ -198,6 +198,12 @@ pub(crate) struct MismatchedDataLayout<'a> {
 }
 
 #[derive(Diagnostic)]
+#[diag("the `-Zfixed-r12` flag is not supported on the `{$arch}` architecture")]
+pub(crate) struct FixedR12InvalidArch<'a> {
+    pub arch: &'a str,
+}
+
+#[derive(Diagnostic)]
 #[diag("the `-Zfixed-x18` flag is not supported on the `{$arch}` architecture")]
 pub(crate) struct FixedX18InvalidArch<'a> {
     pub arch: &'a str,

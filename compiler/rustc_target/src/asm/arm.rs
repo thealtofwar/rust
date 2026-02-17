@@ -135,6 +135,22 @@ fn reserved_r9(
     }
 }
 
+fn reserved_r12(
+    arch: InlineAsmArch,
+    reloc_model: RelocModel,
+    target_features: &FxIndexSet<Symbol>,
+    target: &Target,
+    is_clobber: bool,
+) -> Result<(), &'static str> {
+    not_thumb1(arch, reloc_model, target_features, target, is_clobber)?;
+
+    if target_features.contains(&sym::reserve_r12) {
+        Err("r12 is a reserved register on this target")
+    } else {
+        Ok(())
+    }
+}
+
 def_regs! {
     Arm ArmInlineAsmReg ArmInlineAsmRegClass {
         r0: reg = ["r0", "a1"],
@@ -148,7 +164,7 @@ def_regs! {
         r9: reg = ["r9", "v6", "rfp"] % reserved_r9,
         r10: reg = ["r10", "sl"] % not_thumb1,
         r11: reg = ["r11", "fp"] % frame_pointer_r11,
-        r12: reg = ["r12", "ip"] % not_thumb1,
+        r12: reg = ["r12", "ip"] % reserved_r12,
         r14: reg = ["r14", "lr"] % not_thumb1,
         s0: sreg_low16, sreg = ["s0"],
         s1: sreg_low16, sreg = ["s1"],
