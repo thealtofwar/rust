@@ -12,4 +12,3 @@ download-ci-llvm = false
 
 [target.thumbv7em-none-eabihf]
 profiler = false
-sanitizer = false
